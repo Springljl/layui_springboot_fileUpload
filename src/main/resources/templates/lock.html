@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>认证</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" href="/static/layui/css/layui.css">
+    <script type="text/javascript" th:src="@{/layui/jQuery.js}" src="/static/layui/jQuery.js"></script>
+    <script type="text/javascript" th:src="@{/layui/jquery.cookie.js}" src="/static/layui/jQuery.js"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}" src="/static/layui/layui.js"></script>
+</head>
+<body>
+<div id="msg" style="display: none">
+<form class="layui-form" action="/index">
+    <table class="layui-table">
+        <tr>
+            <td>用户名</td>
+            <td><input id="name" type="text" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td>密码</td>
+            <td><input id="pwd" type="password" class="layui-input"></td>
+        </tr>
+    </table>
+    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="*">立即提交</button>
+</form>
+</div>
+<script>
+    $(function () {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                title: "认证信息",
+                content: $("#msg"),
+            });
+        });
+        layui.use('form', function () {
+            var form = layui.form;
+            form.on('submit(*)', function (data) {
+                if ($("#name").val() == "root" && $("#pwd").val() == "root") {
+                   $.cookie("auth_a","**");
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+    })
+</script>
+</body>
+</html>
